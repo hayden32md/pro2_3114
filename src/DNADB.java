@@ -1,4 +1,4 @@
-//-------------------------------------------------------------------------
+// -------------------------------------------------------------------------
 
 /**
  * The database implementation for this project.
@@ -14,18 +14,29 @@ public class DNADB implements DNA {
     /**
      * Create a new DNADB object.
      */
-    public DNADB()
-    {
+    public DNADB() {
+
     }
 
 
     // ----------------------------------------------------------
     /**
      * Insert a DNA string into the database
-     * @param sequence The sequence to insert
+     * 
+     * @param sequence
+     *            The sequence to insert
      * @return The outcomes message string
      */
     public String insert(String sequence) {
+        if (sequence == null) {
+            return "Bad input: Sequence may not be null\r\n";
+        }
+        if (sequence.length() == 0) {
+            return "Bad input: Sequence may not be empty\r\n";
+        }
+        if (!sequence.matches("^[ACGT]+$")) {
+            return "Bad Input Sequence |" + sequence + "|\r\n";
+        }
         return null;
     }
 
@@ -33,7 +44,9 @@ public class DNADB implements DNA {
     // ----------------------------------------------------------
     /**
      * Remove a DNA string into the database
-     * @param sequence The sequence to remove
+     * 
+     * @param sequence
+     *            The sequence to remove
      * @return The outcomes message string
      */
     public String remove(String sequence) {
@@ -44,6 +57,7 @@ public class DNADB implements DNA {
     // ----------------------------------------------------------
     /**
      * Print the tree
+     * 
      * @return the print string
      */
     public String print() {
@@ -54,6 +68,7 @@ public class DNADB implements DNA {
     // ----------------------------------------------------------
     /**
      * Print the lengths
+     * 
      * @return the print string
      */
     public String printLengths() {
@@ -64,6 +79,7 @@ public class DNADB implements DNA {
     // ----------------------------------------------------------
     /**
      * Print the stats
+     * 
      * @return the print string
      */
     public String printStats() {
@@ -74,10 +90,21 @@ public class DNADB implements DNA {
     // ----------------------------------------------------------
     /**
      * Search for a given string
-     * @param sequence The sequence to search for
+     * 
+     * @param sequence
+     *            The sequence to search for
      * @return the print string
      */
     public String search(String sequence) {
+        if (sequence == null) {
+            return "Bad input sequence: Sequence may not be null\r\n";
+        }
+        if (sequence.length() == 0) {
+            return "Bad input sequence: Sequence may not be empty\r\n";
+        }
+        if (!sequence.matches("^[ACGT]*$?$")) {
+            return "Bad input sequence |" + sequence + "|\r\n";
+        }
         return null;
     }
 }

@@ -1,4 +1,4 @@
-//-------------------------------------------------------------------------
+// -------------------------------------------------------------------------
 
 /**
  * Interface class for the DNA String Database Project
@@ -12,7 +12,9 @@ public interface DNA {
     // ----------------------------------------------------------
     /**
      * Insert a DNA string into the database
-     * @param sequence The sequence to insert
+     * 
+     * @param sequence
+     *            The sequence to insert
      * @return The outcomes message string
      */
     public String insert(String sequence);
@@ -21,7 +23,9 @@ public interface DNA {
     // ----------------------------------------------------------
     /**
      * Remove a DNA string into the database
-     * @param sequence The sequence to remove
+     * 
+     * @param sequence
+     *            The sequence to remove
      * @return The outcomes message string
      */
     public String remove(String sequence);
@@ -30,6 +34,7 @@ public interface DNA {
     // ----------------------------------------------------------
     /**
      * Print the tree
+     * 
      * @return the print string
      */
     public String print();
@@ -38,6 +43,7 @@ public interface DNA {
     // ----------------------------------------------------------
     /**
      * Print the lengths
+     * 
      * @return the print string
      */
     public String printLengths();
@@ -46,6 +52,7 @@ public interface DNA {
     // ----------------------------------------------------------
     /**
      * Print the stats
+     * 
      * @return the print string
      */
     public String printStats();
@@ -54,7 +61,9 @@ public interface DNA {
     // ----------------------------------------------------------
     /**
      * Search for a given string
-     * @param sequence The sequence to search for
+     * 
+     * @param sequence
+     *            The sequence to search for
      * @return the print string
      */
     public String search(String sequence);

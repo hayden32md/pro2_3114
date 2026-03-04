@@ -11,11 +11,13 @@
 public class DNADB implements DNA {
 
     // ----------------------------------------------------------
+    private DNATreeNode root;
+
     /**
      * Create a new DNADB object.
      */
     public DNADB() {
-
+        root = FlyweightNode.getInstance();
     }
 
 
@@ -37,7 +39,15 @@ public class DNADB implements DNA {
         if (!sequence.matches("^[ACGT]+$")) {
             return "Bad Input Sequence |" + sequence + "|\r\n";
         }
-        return null;
+
+        int[] visited = { 0 };
+        String found = root.search(sequence + "$", 0, visited);
+        if (!found.isEmpty()) {
+            return "Sequence |" + sequence + "| already exists\r\n";
+        }
+
+        root = root.insert(sequence, 0);
+        return "Sequence |" + sequence + "| inserted\r\n";
     }
 
 
@@ -50,7 +60,25 @@ public class DNADB implements DNA {
      * @return The outcomes message string
      */
     public String remove(String sequence) {
-        return null;
+        if (sequence == null) {
+            return "Bad input: Sequence may not be null\r\n";
+        }
+        if (sequence.length() == 0) {
+            return "Bad input: Sequence may not be empty\r\n";
+        }
+        if (!sequence.matches("^[ACGT]+$")) {
+            return "Bad Input Sequence |" + sequence + "|\r\n";
+        }
+
+        // Check if sequence exists
+        int[] visited = { 0 };
+        String found = root.search(sequence + "$", 0, visited);
+        if (found.isEmpty()) {
+            return "Sequence |" + sequence + "| does not exist\r\n";
+        }
+
+        root = root.remove(sequence, 0);
+        return "Sequence |" + sequence + "| removed\r\n";
     }
 
 
@@ -61,7 +89,7 @@ public class DNADB implements DNA {
      * @return the print string
      */
     public String print() {
-        return null;
+        return "tree dump:\r\n" + root.print(0);
     }
 
 
@@ -72,7 +100,7 @@ public class DNADB implements DNA {
      * @return the print string
      */
     public String printLengths() {
-        return null;
+        return "tree dump with lengths:\r\n" + root.printLengths(0);
     }
 
 
@@ -83,7 +111,7 @@ public class DNADB implements DNA {
      * @return the print string
      */
     public String printStats() {
-        return null;
+        return "tree dump with stats:\r\n" + root.printStats(0);
     }
 
 
@@ -102,9 +130,17 @@ public class DNADB implements DNA {
         if (sequence.length() == 0) {
             return "Bad input sequence: Sequence may not be empty\r\n";
         }
-        if (!sequence.matches("^[ACGT]*$?$")) {
+        if (!sequence.matches("^[ACGT]+[$]?$")) {
             return "Bad input sequence |" + sequence + "|\r\n";
         }
-        return null;
+        
+        int[] visited = { 0 };
+        String results = root.search(sequence, 0, visited);
+
+        if (results.isEmpty()) {
+            return "No sequence found\r\n# of nodes visited: " + visited[0]
+                + "\r\n";
+        }
+        return results + "# of nodes visited: " + visited[0] + "\r\n";
     }
 }

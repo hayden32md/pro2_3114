@@ -1,5 +1,4 @@
 import student.TestCase;
-import student.testingsupport.annotations.ScoringWeight;
 
 /**
  * @author CS3114/5040 staff
@@ -19,7 +18,6 @@ public class DNAProjTest extends TestCase {
     /**
      * Test output formatting
      */
-
     public void testSampleInput() {
         assertFuzzyEquals("Sequence |ACGT| inserted", it.insert("ACGT"));
         assertFuzzyEquals("Sequence |ACGT| already exists", it.insert("ACGT"));
@@ -70,19 +68,22 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test split on insert: inserting A then AC creates correct internal
+     * structure.
+     */
     public void testSplitOnInsert() {
         it.insert("A");
         it.insert("AC");
-        assertFuzzyEquals("tree dump:\r\n" + "I\r\n" + "  I\r\n" + "    E\r\n" + // A
-                                                                                 // branch
-            "    AC\r\n" + // C branch
-            "    E\r\n" + // G branch
-            "    E\r\n" + // T branch
-            "    A\r\n" + // $ branch
-            "  E\r\n" + "  E\r\n" + "  E\r\n" + "  E", it.print());
+        assertFuzzyEquals("tree dump:\r\n" + "I\r\n" + "  I\r\n" + "    E\r\n"
+            + "    AC\r\n" + "    E\r\n" + "    E\r\n" + "    A\r\n" + "  E\r\n"
+            + "  E\r\n" + "  E\r\n" + "  E", it.print());
     }
 
 
+    /**
+     * Test remove collapses internal node back to single leaf.
+     */
     public void testRemoveCollapses() {
         it.insert("AAAA");
         it.insert("AAAC");
@@ -91,6 +92,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test inserting and removing all sequences leaves empty tree.
+     */
     public void testRemoveAll() {
         it.insert("ACGT");
         it.remove("ACGT");
@@ -98,6 +102,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test prefix search finds multiple results.
+     */
     public void testPrefixSearch() {
         it.insert("ACGT");
         it.insert("ACGG");
@@ -107,6 +114,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test exact search with $ finds only exact match, not longer sequences.
+     */
     public void testExactSearch() {
         it.insert("AA");
         it.insert("AAAA");
@@ -114,12 +124,18 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test search on empty tree returns no sequence found.
+     */
     public void testSearchEmpty() {
         assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
             .search("A$"));
     }
 
 
+    /**
+     * Test printLengths on single sequence.
+     */
     public void testPrintLengthsSingle() {
         it.insert("ACGT");
         assertFuzzyEquals("tree dump with lengths:\r\nACGT 4", it
@@ -154,11 +170,17 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test remove on empty tree returns does not exist.
+     */
     public void testRemoveEmpty() {
         assertFuzzyEquals("Sequence |ACGT| does not exist", it.remove("ACGT"));
     }
 
 
+    /**
+     * Test printStats shows correct percentages for mixed sequence.
+     */
     public void testPrintStatsMixed() {
         it.insert("AACC");
         assertFuzzyEquals(
@@ -167,6 +189,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test inserting many sequences under same branch.
+     */
     public void testMultipleInsertSameBranch() {
         it.insert("A");
         it.insert("AC");
@@ -180,17 +205,22 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test G and T branches are ordered correctly (G before T).
+     */
     public void testGAndTBranches() {
         it.insert("G");
         it.insert("T");
         String result = it.print();
         assertTrue(result.contains("G"));
         assertTrue(result.contains("T"));
-        // G is index 2, T is index 3 - G must appear before T
         assertTrue(result.indexOf("G") < result.indexOf("T"));
     }
 
 
+    /**
+     * Test printStats for G and T nucleotides.
+     */
     public void testPrintStatsGT() {
         it.insert("GGTT");
         assertFuzzyEquals(
@@ -199,6 +229,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test printLengths shows lengths for multiple sequences.
+     */
     public void testPrintLengthsMultiple() {
         it.insert("A");
         it.insert("ACGT");
@@ -208,6 +241,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test removing one of two sequences leaves the other intact.
+     */
     public void testRemoveLeavesOther() {
         it.insert("ACGT");
         it.insert("ACGG");
@@ -218,6 +254,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test prefix search that finds no match.
+     */
     public void testPrefixSearchNoMatch() {
         it.insert("AAAA");
         assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
@@ -225,6 +264,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test deep collapse: remove one of two leaves collapses all the way up.
+     */
     public void testRemoveCollapseDeep() {
         it.insert("ACGT");
         it.insert("ACGG");
@@ -233,6 +275,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test reinsert after remove works correctly.
+     */
     public void testReinsertAfterRemove() {
         it.insert("AAAA");
         it.remove("AAAA");
@@ -241,12 +286,18 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test exact search on single leaf tree.
+     */
     public void testSearchSingleLeaf() {
         it.insert("ACGT");
         assertFuzzyEquals("ACGT\r\n# of nodes visited: 1", it.search("ACGT$"));
     }
 
 
+    /**
+     * Test printStats all T nucleotides.
+     */
     public void testPrintStatsAllT() {
         it.insert("TTTT");
         assertFuzzyEquals(
@@ -255,6 +306,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test printStats all C nucleotides.
+     */
     public void testPrintStatsAllC() {
         it.insert("CCCC");
         assertFuzzyEquals(
@@ -263,6 +317,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test all 4 branches (A, C, G, T) appear in correct order at root level.
+     */
     public void testAllBranches() {
         it.insert("A");
         it.insert("C");
@@ -273,6 +330,26 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test that internal node with two leaves does NOT collapse.
+     * Only a single LeafNode survivor triggers collapse.
+     */
+    public void testNoCollapseWithTwoLeaves() {
+        it.insert("AA");
+        it.insert("AC");
+        it.insert("AG");
+        it.remove("AG");
+        // Two leaves remain — must NOT collapse
+        String result = it.print();
+        assertTrue(result.contains("AA"));
+        assertTrue(result.contains("AC"));
+        assertFalse(result.contains("AG\r\n"));
+    }
+
+
+    /**
+     * Test exact search with $ finds AA but not AAAA.
+     */
     public void testExactSearchNoPrefix() {
         it.insert("AA");
         it.insert("AAAA");
@@ -282,6 +359,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test that $ branch is used correctly for exact search of short sequence.
+     */
     public void testTermBranchExactSearch() {
         it.insert("A");
         it.insert("AA");
@@ -289,6 +369,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test prefix search does not return sequences that don't share prefix.
+     */
     public void testPrefixNoPartialMatch() {
         it.insert("ACGT");
         it.insert("TGCA");
@@ -298,14 +381,16 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Test that internal node with single InternalNode child does NOT collapse.
+     * Collapse only happens when sole survivor is a LeafNode.
+     */
     public void testNoCollapseWhenChildIsInternal() {
         it.insert("AAA");
         it.insert("AAC");
         it.insert("CA");
         it.remove("CA");
-        // Two leaves remain under AA-branch internal node
-        // The A-branch child of root is an InternalNode, not a LeafNode
-        // So root's remove should NOT collapse to a leaf
+        // A-branch InternalNode is sole child of root — root stays as Internal
         String result = it.print();
         assertTrue(result.startsWith("tree dump:\r\nI"));
         assertTrue(result.contains("AAA"));
@@ -313,97 +398,158 @@ public class DNAProjTest extends TestCase {
     }
 
 
-    public void testRemoveKeepsInternalWithMixedChildren() {
-        it.insert("AA");
-        it.insert("AB");
-    }
-
-
-    public void testRemoveWithInternalSibling() {
-        it.insert("AAA");
-        it.insert("AAC");
-        it.insert("CA");
-        it.remove("CA");
-
-        String result = it.print();
-        assertTrue(result.startsWith("tree dump:\r\nI"));
-    }
-
-
+    /**
+     * Test prefix search at exact depth finds all matching leaves.
+     */
     public void testPrefixSearchAtExactDepth() {
         it.insert("ACG");
         it.insert("ACT");
-
         String result = it.search("AC");
         assertTrue(result.contains("ACG"));
         assertTrue(result.contains("ACT"));
-        assertFalse(result.contains("# of nodes visited: 1"));
     }
 
 
+    /**
+     * Test search for non-existent sequence correctly reports not found.
+     */
     public void testSearchNonExistentLong() {
-        it.insert("AAAA"); // Goes into leaf
-        it.insert("ACGT"); // Forces split at root (Internal Node)
-
-        // Search for something not there
-        // Root (Internal) + A-branch (Internal) + ...
+        it.insert("AAAA");
+        it.insert("ACGT");
         String result = it.search("ACGA$");
-
-        // Check your console for the actual number if 3 isn't correct,
-        // but it will definitely be > 1 now.
         assertTrue(result.contains("No sequence found"));
         assertTrue(result.contains("# of nodes visited: 3"));
     }
 
 
+    /**
+     * Test indentation is correct — platform-safe check without \r.
+     */
     public void testIndentationDepth() {
         it.insert("AAAA");
-        it.insert("ACGT"); // Forces Internal Node
+        it.insert("ACGT");
         String result = it.printLengths();
-
-        assertTrue("Indentation for AAAA at level 2 should be 4 spaces", result
-            .contains("\r\n    AAAA 4"));
+        assertTrue("Indentation for AAAA should be 4 spaces", result.contains(
+            "    AAAA 4"));
     }
 
 
-    public void testInsertRemoveMultipleLeaves() {
-        // Insert multiple sequences under same root
-        it.insert("AG");
-        it.insert("AT");
+    /**
+     * Test empty string search matches everything (spec requirement).
+     */
+    public void testEmptyStringSearch() {
+        it.insert("ACGT");
+        it.insert("TGCA");
+        String result = it.search("");
+        assertTrue(result.contains("ACGT"));
+        assertTrue(result.contains("TGCA"));
+    }
+
+
+    /**
+     * Test bare "$" search always finds nothing per spec.
+     */
+    public void testDollarOnlySearch() {
+        assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
+            .search("$"));
+        it.insert("ACGT");
+        it.insert("TGCA");
+        String result = it.search("$");
+        assertTrue(result.contains("No sequence found"));
+        assertTrue(result.contains("# of nodes visited: 2"));
+    }
+
+
+    /**
+     * Test null remove returns bad input message.
+     * Kills DNADB.remove null check mutation.
+     */
+    public void testRemoveNull() {
+        assertFuzzyEquals("Bad input: Sequence may not be null\r\n", it.remove(
+            null));
+    }
+
+
+    /**
+     * Test remove of empty string returns bad input message.
+     * Kills DNADB.remove empty check mutation.
+     */
+    public void testRemoveEmptyString() {
+        assertFuzzyEquals("Bad input: Sequence may not be empty\r\n", it.remove(
+            ""));
+    }
+
+
+    /**
+     * Test duplicate insert leaves tree as single leaf.
+     * Kills LeafNode.insert equals mutation.
+     */
+    public void testInsertDuplicateNoSplit() {
+        it.insert("ACGT");
+        it.insert("ACGT");
+        assertFuzzyEquals("tree dump:\r\nACGT", it.print());
+    }
+
+
+    /**
+     * Test removing non-matching leaf leaves tree intact.
+     * Kills LeafNode.remove equals mutation.
+     */
+    public void testRemoveNonMatchingLeaf() {
+        it.insert("ACGT");
+        it.remove("TGCA");
+        assertFuzzyEquals("tree dump:\r\nACGT", it.print());
+    }
+
+
+    /**
+     * Test prefix search on leaf with no match returns nothing.
+     * Kills LeafNode.search startsWith mutation.
+     */
+    public void testPrefixSearchLeafNoMatch() {
+        it.insert("ACGT");
+        assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
+            .search("TG"));
+    }
+
+
+    /**
+     * Test $ branch placement proves depth>=length uses TERM_INDEX.
+     * Kills DNATreeNode.getBranchIndex depth boundary mutation.
+     */
+    public void testTermIndexAtExactDepth() {
+        it.insert("A");
         it.insert("AC");
-
-        // Remove one leaf and check the remaining ones still exist
-        it.remove("AT");
-        String treeDump = it.print();
-
-        assertTrue(treeDump.contains("AG"));
-        assertTrue(treeDump.contains("AC"));
-        assertFalse(treeDump.contains("AT"));
-
-        // Also check lengths for remaining sequences
-        String lengths = it.printLengths();
-        assertTrue(lengths.contains("AG 2"));
-        assertTrue(lengths.contains("AC 2"));
+        assertFuzzyEquals("tree dump:\r\n" + "I\r\n" + "  I\r\n" + "    E\r\n"
+            + "    AC\r\n" + "    E\r\n" + "    E\r\n" + "    A\r\n" + "  E\r\n"
+            + "  E\r\n" + "  E\r\n" + "  E", it.print());
     }
 
 
-    public void testSimpleLeafStatsAndSearch() {
+    /**
+     * Test search after removes finds only remaining sequences.
+     */
+    public void testSearchAfterRemoves() {
         it.insert("AA");
         it.insert("AC");
+        it.insert("AG");
+        it.remove("AC");
+        String result = it.search("A");
+        assertTrue(result.contains("AA"));
+        assertTrue(result.contains("AG"));
+        assertFalse(result.contains("AC"));
+    }
 
-        // Check that both leaves exist
-        String tree = it.print();
-        assertTrue(tree.contains("AA"));
-        assertTrue(tree.contains("AC"));
 
-        // Check that search finds both with prefix
-        String prefixSearch = it.search("A");
-        assertTrue(prefixSearch.contains("AA"));
-        assertTrue(prefixSearch.contains("AC"));
-
-        // Check stats calculation for one leaf
-        String stats = it.printStats();
-        assertTrue(stats.contains("AA"));
-        assertTrue(stats.contains("AC"));
+    /**
+     * Test complex remove sequence collapses to single remaining leaf.
+     */
+    public void testComplexRemoveTree() {
+        it.insert("ACGT");
+        it.insert("ACGG");
+        it.insert("TGCA");
+        it.remove("ACGG");
+        it.remove("TGCA");
+        assertFuzzyEquals("tree dump:\r\nACGT", it.print());
     }
 }

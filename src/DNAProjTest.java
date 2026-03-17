@@ -1,7 +1,7 @@
 import student.TestCase;
 
 /**
- * @author CS3114/5040 staff
+ * @author Hayden Douglas, Insung Lee
  * @version Spring 2026
  */
 public class DNAProjTest extends TestCase {

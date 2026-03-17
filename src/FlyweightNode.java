@@ -2,7 +2,7 @@
  * Flyweight singleton representing all empty leaf nodes.
  * Only one instance is ever created for the entire tree.
  * 
- * @author Hayden Douglas
+ * @author Hayden Douglas, Insung Lee
  * @version Spring 2026
  */
 

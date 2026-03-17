@@ -1,7 +1,7 @@
 /**
  * Base class for all DNA tree nodes.
  *
- * @author Hayden Douglas
+ * @author Hayden Douglas, Insung Lee
  * @version Spring 2026
  */
 public abstract class DNATreeNode {

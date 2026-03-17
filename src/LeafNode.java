@@ -2,7 +2,7 @@
 /**
  * A leaf node storing exactly one DNA sequence.
  *
- * @author Hayden Douglas
+ * @author Hayden Douglas, Insung Lee
  * @version Spring 2026
  */
 public class LeafNode extends DNATreeNode {

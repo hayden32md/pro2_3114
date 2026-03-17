@@ -3,7 +3,7 @@
  * An internal node in the DNA tree with exactly 5 children (A, C, G, T, $).
  * Stores no sequence data — only child pointers.
  *
- * @author Hayden Douglas
+ * @author Hayden Douglas, Insung Lee
  * @version Spring 2026
  */
 public class InternalNode extends DNATreeNode {

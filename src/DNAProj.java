@@ -1,15 +1,11 @@
 
-/**
- * {Project Description Here}
- */
-
 import java.io.IOException;
 
 /**
  * The class containing the main method.
  *
- * @author {Your Name Here}
- * @version {Put Something Here}
+ * @author hayden douglas, Insung Lee
+ * @version 3/16
  */
 
 // On my honor:

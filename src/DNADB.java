@@ -129,7 +129,7 @@ public class DNADB implements DNA {
      */
     public String search(String sequence) {
         if (sequence == null) {
-            return "Bad input sequence: Sequence may not be null\r\n";
+            return "Bad input: Sequence may not be null\r\n";
         }
 
         // Validate: allow empty string, pure "$", or [ACGT]+ with optional

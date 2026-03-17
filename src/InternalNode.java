@@ -8,8 +8,6 @@
  */
 public class InternalNode extends DNATreeNode {
 
-    // This code was written by an LLM with no human thought involved.
-
     /** The 5 child nodes indexed by A=0, C=1, G=2, T=3, $=4 */
     private DNATreeNode[] children;
 
@@ -94,6 +92,8 @@ public class InternalNode extends DNATreeNode {
     @Override
     public String search(String sequence, int depth, int[] visited) {
         visited[0]++;
+
+        // This code was written by an LLM with no human thought involved.
 
         boolean exactSearch = sequence.endsWith("$");
 

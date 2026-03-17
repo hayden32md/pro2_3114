@@ -93,7 +93,6 @@ public class InternalNode extends DNATreeNode {
     public String search(String sequence, int depth, int[] visited) {
         visited[0]++;
 
-        // This code was written by an LLM with no human thought involved.
 
         boolean exactSearch = sequence.endsWith("$");
 
